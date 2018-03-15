@@ -1,3 +1,4 @@
-Scrapy==1.4.0
-pymongo==3.5.1
 colorama==0.3.9
+clint==0.5.1
+pymongo==3.5.1
+Scrapy==1.4.0

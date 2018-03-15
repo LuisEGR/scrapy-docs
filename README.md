@@ -6,7 +6,7 @@ Este repositorio contiene una spyder de scrapy que permite identificar y descarg
 ## Requerimientos:
 
 * Python v3.6 o superior
-* 
+
 ---
 ## Instalación
 
@@ -31,8 +31,6 @@ los parámetros disponibles son:
 
 |parámetro|descripcion|ejemplo|default|
 |---:|:---|:---|:---:|
-|url|Dirección principal desde donde se comenzarán a buscar archivos, los links que se encuentren que no sean archivos se visitarán para buscar archivos dentro de los mismos, hasta llegar a la profundidad indicada|`-url https://imgur.com/`|`None`|
-|depth|Profundiad máxima en la que se buscarán links| `-depth 5` | `3`
-|files|Extensiones permitidad para los archivos, separadas por coma y sin espacios| `-files pdf,txt,png,jpg,jpeg`|`pdf`|
-|saveOnMongo|Indica si el archivo se guardará en mongo como blob, de lo contrario se tiene que indicar la dirección donde se guardarán los archivos|`-saveOnMongo true`|`true`|
-|dest|Dirección destino en donde se guardarán los archivos descargados.|`-dest ./files`|`./descargas`|
+|url|Dirección principal desde donde se comenzarán a buscar archivos, los links que se encuentren que no sean archivos se visitarán para buscar archivos dentro de los mismos, hasta llegar a la profundidad indicada|`-a url=https://imgur.com/`|`None`|
+|depth|Profundiad máxima en la que se buscarán links| `-a depth=5` | `3`
+|files|Extensiones permitidad para los archivos, separadas por coma y sin espacios| `-a files=pdf,txt,png,jpg,jpeg`|`pdf`|

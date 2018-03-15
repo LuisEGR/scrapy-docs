@@ -9,6 +9,10 @@ import scrapy
 
 
 class DocumentosItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    UUID = scrapy.Field()
+    SITE = scrapy.Field()
+    URL = scrapy.Field()
+    TITLE = scrapy.Field()
+    ARCHIVO = scrapy.Field()
+    SH_FILE = scrapy.Field()
+    PATH = scrapy.Field()
