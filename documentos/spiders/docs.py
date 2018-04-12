@@ -4,9 +4,7 @@ import hashlib
 from scrapy import Spider
 from scrapy import Request
 from scrapy import signals
-from utilidades import save_pdf
 from utilidades import Log
-from utilidades import delete_temporal_files
 from bson.binary import Binary
 from documentos.items import DocumentosItem
 
@@ -38,7 +36,7 @@ class DocsSpider(Spider):
             else:
                 if(response.meta['depth'] < self.profundidad_maxima):
                     yield Request(urlfull)
-
+<select><
     def guardar_archivo(self, response):        
         filename = response.url.split('/')[-1]
         Log.msg("----------------------------")
