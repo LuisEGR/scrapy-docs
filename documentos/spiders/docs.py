@@ -28,15 +28,24 @@ class DocsSpider(Spider):
         title = response.css('title::text').extract_first()
         path = response.url.replace(self.start_urls[0], '')
         links = response.css('a::attr(href)').extract()
+        if 'paths' in response.meta:
+            paths = response.meta['paths']
+        else:
+            paths = []
+
+        paths.append({
+            'TEXTO': title,
+            'LINK': path
+        })
         for link in links:            
             extension = link.split('.')[-1]
             urlfull = response.urljoin(link)
             if(extension in self.allowed_extensions):
-                yield Request(urlfull, callback=self.guardar_archivo, meta={'title':title, 'path': path})
+                yield Request(urlfull, callback=self.guardar_archivo, meta={'title':title, 'paths': paths})
             else:
                 if(response.meta['depth'] < self.profundidad_maxima):
-                    yield Request(urlfull)
-<select><
+                    yield Request(urlfull, meta={'paths': paths })
+
     def guardar_archivo(self, response):        
         filename = response.url.split('/')[-1]
         Log.msg("----------------------------")
@@ -48,14 +57,10 @@ class DocsSpider(Spider):
         m.update(binary_file)      
         hashmd5 = m.hexdigest()
         archivo = DocumentosItem()
-        archivo['UUID'] = hashmd5
+        archivo['MD5'] = hashmd5
         archivo['SITE'] = self.allowed_domains[0]
         archivo['URL'] = response.url
         archivo['TITLE'] = filename
         archivo['ARCHIVO'] = binary_file
-        archivo['PATH'] = {
-            'TEXTO': response.meta['title'],
-            'LINK': '/' + response.meta['path'],
-        }
-
+        archivo['PATH'] = response.meta['paths']
         yield archivo
