@@ -9,7 +9,7 @@ import scrapy
 
 
 class DocumentosItem(scrapy.Item):
-    UUID = scrapy.Field()
+    MD5 = scrapy.Field()
     SITE = scrapy.Field()
     URL = scrapy.Field()
     TITLE = scrapy.Field()

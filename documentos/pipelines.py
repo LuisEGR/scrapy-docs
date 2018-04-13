@@ -31,7 +31,7 @@ class MongoDBPipeline(object):
 
     def process_item(self, item, spider):
         exist = self.db[self.collection_name].find(
-            {'UUID': item['UUID']}).count() > 0
+            {'MD5': item['MD5']}).count() > 0
         print("Existente:" + str(exist))
         if not exist:            
             self.db[self.collection_name].insert_one(dict(item))

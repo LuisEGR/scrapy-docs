@@ -21,30 +21,38 @@ class DocsSpider(Spider):
         self.start_urls = [url]
         self.allowed_domains = [domain]
         self.allowed_extensions = tipos.split(',')
+        print(self.allowed_extensions)
         self.profundidad_maxima = profindudad
 
 
     def parse(self, response):
-        title = response.css('title::text').extract_first()
-        path = response.url.replace(self.start_urls[0], '')
+        Log.log(response.url)
+        if not b'text/html' in response.headers['Content-Type']:
+          print("Ignorado: ", response.headers['Content-Type'])
+          return False
+        
         links = response.css('a::attr(href)').extract()
+        links_texts = response.css('a *::text').extract()
+        
         if 'paths' in response.meta:
-            paths = response.meta['paths']
+          paths = response.meta['paths']
         else:
-            paths = []
+          paths = []
+        for _link, _link_text in zip(links, links_texts):       
+          pat_aux = paths[:]
+         
+          extension = _link.split('.')[-1]
+          urlfull = response.urljoin(_link)
+          if(extension in self.allowed_extensions):
+              yield Request(urlfull, callback=self.guardar_archivo, meta={'paths': pat_aux})
+          else:
+              if(response.meta['depth'] < self.profundidad_maxima):
+                  pat_aux.append({
+                    'TEXTO': _link_text,
+                    'LINK': _link
+                  })
+                  yield Request(urlfull, callback=self.parse,  meta={'paths': pat_aux})
 
-        paths.append({
-            'TEXTO': title,
-            'LINK': path
-        })
-        for link in links:            
-            extension = link.split('.')[-1]
-            urlfull = response.urljoin(link)
-            if(extension in self.allowed_extensions):
-                yield Request(urlfull, callback=self.guardar_archivo, meta={'title':title, 'paths': paths})
-            else:
-                if(response.meta['depth'] < self.profundidad_maxima):
-                    yield Request(urlfull, meta={'paths': paths })
 
     def guardar_archivo(self, response):        
         filename = response.url.split('/')[-1]
