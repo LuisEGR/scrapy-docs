@@ -32,11 +32,10 @@ los parámetros disponibles son:
 |parámetro|descripcion|ejemplo|default|
 |---:|:---|:---|:---:|
 |url|Dirección principal desde donde se comenzarán a buscar archivos, los links que se encuentren que no sean archivos se visitarán para buscar archivos dentro de los mismos, hasta llegar a la profundidad indicada|`-a url=https://imgur.com/`|`None`|
-|depth|Profundiad máxima en la que se buscarán links| `-a profundidad=5` | `3`
-|files|Extensiones permitidad para los archivos, separadas por coma y sin espacios| `-a tipos=pdf,txt,png,jpg,jpeg`|`pdf`|
+|profundidad|Profundiad máxima en la que se buscarán links| `-a profundidad=5` | `3`
+|tipos|Extensiones permitidad para los archivos, separadas por coma y sin espacios| `-a tipos=pdf,txt,png,jpg,jpeg`|`pdf`|
 
 ejemplo completo:
-`scrapy crawl docs -a url=http://www.escom.ipn.mx -a profundidad=5 -a tipos=pdf,txt,png,jpg,jpeg`
 `scrapy crawl docs -a url=http://www.poderjudicialags.gob.mx/ -a profundidad=5 -a tipos=pdf`
 
 ------
