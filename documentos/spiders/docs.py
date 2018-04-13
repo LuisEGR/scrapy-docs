@@ -30,15 +30,19 @@ class DocsSpider(Spider):
         if not b'text/html' in response.headers['Content-Type']:
           print("Ignorado: ", response.headers['Content-Type'])
           return False
-        
-        links = response.css('a::attr(href)').extract()
-        links_texts = response.css('a *::text').extract()
-        
+        links_texts = []
+        links = []
+        all_links = response.css('a')
+        for link in all_links:
+          if link.css('::attr(href)').extract_first():
+            links_texts.append(link.css('*::text').extract_first())
+            links.append(link.css('::attr(href)').extract_first())
+
         if 'paths' in response.meta:
           paths = response.meta['paths']
         else:
           paths = [] 
-          
+        print(len(links), '_', len(links_texts))
         for _link, _link_text in zip(links, links_texts):       
           pat_aux = paths[:]
           pat_aux.append({
