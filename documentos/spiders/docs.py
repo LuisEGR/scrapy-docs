@@ -37,20 +37,20 @@ class DocsSpider(Spider):
         if 'paths' in response.meta:
           paths = response.meta['paths']
         else:
-          paths = []
+          paths = [] 
+          
         for _link, _link_text in zip(links, links_texts):       
           pat_aux = paths[:]
-         
+          pat_aux.append({
+            'TEXTO': _link_text,
+            'LINK': _link
+          })
           extension = _link.split('.')[-1]
           urlfull = response.urljoin(_link)
           if(extension in self.allowed_extensions):
               yield Request(urlfull, callback=self.guardar_archivo, meta={'paths': pat_aux})
           else:
               if(response.meta['depth'] < self.profundidad_maxima):
-                  pat_aux.append({
-                    'TEXTO': _link_text,
-                    'LINK': _link
-                  })
                   yield Request(urlfull, callback=self.parse,  meta={'paths': pat_aux})
 
 
